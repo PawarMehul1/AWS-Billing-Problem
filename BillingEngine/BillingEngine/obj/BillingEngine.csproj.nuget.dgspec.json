@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\india\\Desktop\\Internship\\BillingEngine\\BillingEngine\\BillingEngine.csproj": {}
+    "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\BillingEngine.csproj": {}
   },
   "projects": {
-    "C:\\Users\\india\\Desktop\\Internship\\BillingEngine\\BillingEngine\\BillingEngine.csproj": {
+    "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\BillingEngine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\india\\Desktop\\Internship\\BillingEngine\\BillingEngine\\BillingEngine.csproj",
+        "projectUniqueName": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\BillingEngine.csproj",
         "projectName": "BillingEngine",
-        "projectPath": "C:\\Users\\india\\Desktop\\Internship\\BillingEngine\\BillingEngine\\BillingEngine.csproj",
+        "projectPath": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\BillingEngine.csproj",
         "packagesPath": "C:\\Users\\india\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\india\\Desktop\\Internship\\BillingEngine\\BillingEngine\\obj\\",
+        "outputPath": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\india\\AppData\\Roaming\\NuGet\\NuGet.Config",

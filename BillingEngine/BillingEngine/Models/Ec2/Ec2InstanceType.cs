@@ -10,7 +10,7 @@ namespace BillingEngine.Models.Ec2
         public bool IsFreeTierEligible { get; }
 
         public Ec2InstanceType() { }
-        public Ec2InstanceType(string instancetype,double costperhour)  //done
+        public Ec2InstanceType(string instancetype,double costperhour)  
         {
             this.InstanceType=instancetype;
             this.CostPerHour=costperhour;

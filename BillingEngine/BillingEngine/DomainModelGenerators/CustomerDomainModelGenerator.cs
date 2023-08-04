@@ -69,13 +69,16 @@ namespace BillingEngine.DomainModelGenerators
                     {
                         Ec2InstanceType ec2insttype = new Ec2InstanceType();
 
+                        bool check = false;
                         for(int j=0; j< ec2InstanceTypes.Count; j++)
                         {
                             if (ec2InstanceTypes[j].InstanceType.Equals(ec2ResourceUsageEventsForCustomer[i].Ec2InstanceType))
                             {
                                 ec2insttype= ec2InstanceTypes[j];
+                                check = true;
                             }
                         }
+                        
 
                         List<ResourceUsageEvent> usage = new List<ResourceUsageEvent>();
                         usage.Add(new ResourceUsageEvent(ec2ResourceUsageEventsForCustomer[i].UsedFrom, ec2ResourceUsageEventsForCustomer[i].UsedUntil));

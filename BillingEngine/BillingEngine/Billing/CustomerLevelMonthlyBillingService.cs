@@ -25,7 +25,7 @@ namespace BillingEngine.Billing
 
         private MonthlyBill GenerateBillForMonth(Customer customer, MonthYear monthYear)
         {
-            var monthlyBill = new MonthlyBill(customer.CustomerId, customer.CustomerName, monthYear);
+            MonthlyBill monthlyBill = new MonthlyBill(customer.CustomerId, customer.CustomerName, monthYear);
 
             monthlyBill.AddMonthlyEc2Usages(customer.GetMonthlyEc2InstanceUsagesForMonth(monthYear));
 

@@ -17,8 +17,8 @@ namespace BillingEngine
                 "C:/Users/india/Desktop/Internship/TestCases/Case1/Input/AWSCustomerUsage.csv",
                 "C:/Users/india/Desktop/Internship/input/Region.csv"
             );
-            Console.WriteLine(monthlyBills.Count);
-            //monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "path/to/output/dir"));
+            
+            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "C:/Users/india/Desktop/Internship/TestCases/Case1/Result"));
         }
     }
 }

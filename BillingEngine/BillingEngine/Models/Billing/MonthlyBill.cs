@@ -35,45 +35,55 @@ namespace BillingEngine.Models.Billing
             //Using MonthlyEc2InstanceUsages, compute List<AggregatedMonthlyEc2Usage>
 
             List<AggregatedMonthlyEc2Usage> aggregatedMonthlyEc2Usages = new List<AggregatedMonthlyEc2Usage>();
+            
 
-            foreach(var items in  MonthlyEc2InstanceUsages) 
+            foreach(var monthly in MonthlyEc2InstanceUsages)
             {
-                bool flag = false;
-                foreach( var monthlyusage in aggregatedMonthlyEc2Usages)
-                {
-                    if(monthlyusage.ResourceType.Equals(items.Ec2InstanceType.InstanceType))
-                    {
-                        monthlyusage.ids.Add(items.Ec2InstanceId);
-                        double rate = items.Ec2InstanceType.CostPerHour;
+                bool find = false;
 
-                        foreach( var us in  items.Usages)
+                foreach(var aggrigatedinstance in aggregatedMonthlyEc2Usages)
+                {
+                    
+                    if (aggrigatedinstance.ResourceType.Equals(monthly.Ec2InstanceType.InstanceType))
+                    {
+                        aggrigatedinstance.addid(monthly.Ec2InstanceId);
+                        double rate = monthly.Ec2InstanceType.CostPerHour;
+                        foreach (var use in monthly.Usages)
                         {
-                            monthlyusage.TotalUsedTime += us.getusedtime();
-                            monthlyusage.TotalBilledTime+= TimeSpan.FromHours(us.GetBillableHours());
-                            monthlyusage.TotalAmount += rate* ((double)(us.GetBillableHours()));
+                            if (use.UsedFrom.Month == this.MonthYear.Month && use.UsedFrom.Year==this.MonthYear.Year)
+                            {
+                                aggrigatedinstance.TotalUsedTime += use.getusedtime();
+                                aggrigatedinstance.TotalBilledTime += use.GetBillableHours() * 60 * 60;
+                                aggrigatedinstance.TotalAmount += rate * (double)(use.GetBillableHours());
+                            }
                         }
-                        flag = true;
+
+                        find = true;
                         break;
                     }
                 }
-
-                if(!flag)
+                if(!find)
                 {
-                    AggregatedMonthlyEc2Usage monthlyusage = new AggregatedMonthlyEc2Usage();
+                    AggregatedMonthlyEc2Usage aggregatedusage = new AggregatedMonthlyEc2Usage();
 
-                    monthlyusage.ResourceType = items.Ec2InstanceType.InstanceType;
-                    monthlyusage.ids.Add(items.Ec2InstanceId);
-                    double rate = items.Ec2InstanceType.CostPerHour;
+                    double rate = monthly.Ec2InstanceType.CostPerHour;
+                    aggregatedusage.ResourceType = monthly.Ec2InstanceType.InstanceType;
+                    aggregatedusage.addid(monthly.Ec2InstanceId);
 
-                    foreach (var us in items.Usages)
-                    {
-                        monthlyusage.TotalUsedTime += us.getusedtime();
-                        monthlyusage.TotalBilledTime += TimeSpan.FromHours(us.GetBillableHours());
-                        monthlyusage.TotalAmount += rate * ((double)(us.GetBillableHours()));
+                    foreach (var use in monthly.Usages)
+                    { 
+                            aggregatedusage.TotalUsedTime += use.getusedtime();
+                            aggregatedusage.TotalBilledTime += use.GetBillableHours() * 60 * 60;
+                            aggregatedusage.TotalAmount += rate * (double)(use.GetBillableHours());
+                        
                     }
-                }
-            }
 
+                    aggregatedMonthlyEc2Usages.Add (aggregatedusage);
+
+                }
+             
+            }
+            
             foreach(var item in aggregatedMonthlyEc2Usages)
             {
                 item.TotalResources = item.countinstance();

@@ -27,8 +27,27 @@ namespace BillingEngine.Models
 
         public List<MonthYear> GetDistinctMonthYears()
         {
+            HashSet<int> months = new HashSet<int>();
 
-            return new List<MonthYear>();
+            foreach(var instance in Ec2Instances)
+            {
+                foreach(var use in instance.Usages)
+                {
+                    int starting = (use.UsedFrom.Year) * 100 + use.UsedFrom.Month;
+                    int ending = (use.UsedUntil.Year) * 100 + use.UsedUntil.Month;
+
+                    months.Add(starting);
+                    months.Add(ending);
+                }
+            }
+
+            List<MonthYear> distintMonths = new List<MonthYear>();
+            foreach(var mon in months)
+            {
+                MonthYear month = new MonthYear(mon/100,mon%100);
+                distintMonths.Add(month);
+            }
+            return distintMonths;
         }
 
         public List<MonthlyEc2InstanceUsage> GetMonthlyEc2InstanceUsagesForMonth(MonthYear monthYear)  //done
@@ -38,9 +57,13 @@ namespace BillingEngine.Models
 
             List<MonthlyEc2InstanceUsage> monthlyec2instnceusage = new List<MonthlyEc2InstanceUsage>();
 
-            for(int i=0; i<Ec2Instances.Count; i++)
+            foreach(var ec2instance in Ec2Instances)
             {
-                monthlyec2instnceusage.Add(Ec2Instances[i].GetMonthlyEc2InstanceUsageForMonth(monthYear));
+
+                  
+                //MonthlyEc2InstanceUsage monthlyusage = new MonthlyEc2InstanceUsage(ec2instance.InstanceId,ec2instance.InstanceType,ec2instance.Usages);
+
+                monthlyec2instnceusage.Add(ec2instance.GetMonthlyEc2InstanceUsageForMonth(monthYear));
             }
 
             return  monthlyec2instnceusage;

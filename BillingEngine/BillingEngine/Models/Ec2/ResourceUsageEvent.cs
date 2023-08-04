@@ -15,11 +15,12 @@ namespace BillingEngine.Models.Ec2
             this.UsedFrom = UsedFrom;
             this.UsedUntil = UsedUntil;
         }
-        public TimeSpan getusedtime()
+        public int getusedtime()
         {
+            
             TimeSpan ts = UsedUntil.Subtract(UsedFrom);
-
-            return ts;
+            int sec = ts.Days * 24 * 60 * 60 + ts.Hours * 60 * 60 + ts.Seconds + ts.Minutes * 60;
+            return sec;
         }
         public int GetBillableHours()
         {

@@ -42,7 +42,7 @@ namespace BillingEngine.Models.Ec2
                 DateTime from = Usages[i].UsedFrom;
                 DateTime until = Usages[i].UsedFrom;
 
-               
+
                 int startmonth=(from.Year*100)+from.Month;
                 int endmonth= (until.Year * 100) + until.Month;
                 int currentMonth=(monthYear.Year*100)+monthYear.Month;

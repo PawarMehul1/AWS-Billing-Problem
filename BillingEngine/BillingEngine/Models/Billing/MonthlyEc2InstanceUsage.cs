@@ -19,8 +19,16 @@ namespace BillingEngine.Models.Billing
             Usages = new List<ResourceUsageEvent>();
         }
 
+        public MonthlyEc2InstanceUsage(string instanceId, Ec2InstanceType instanceType,List<ResourceUsageEvent> usages)
+        {
+            this.Ec2InstanceId= instanceId;
+            this.Ec2InstanceType = instanceType;
+            this.Usages = usages;
+        }
         public MonthlyEc2InstanceUsage(string instanceId, Ec2InstanceType instanceType)
         {
+            this.Ec2InstanceId = instanceId;
+            this.Ec2InstanceType = instanceType;
             Usages = new List<ResourceUsageEvent>();
         }
 
