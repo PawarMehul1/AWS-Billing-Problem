@@ -54,11 +54,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\BillingEngine.csproj",
+      "projectUniqueName": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine3\\BillingEngine\\BillingEngine.csproj",
       "projectName": "BillingEngine",
-      "projectPath": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\BillingEngine.csproj",
+      "projectPath": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine3\\BillingEngine\\BillingEngine.csproj",
       "packagesPath": "C:\\Users\\india\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine\\BillingEngine\\obj\\",
+      "outputPath": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine3\\BillingEngine\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\india\\AppData\\Roaming\\NuGet\\NuGet.Config",

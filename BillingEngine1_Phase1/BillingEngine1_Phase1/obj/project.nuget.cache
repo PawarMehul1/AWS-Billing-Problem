@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "nhdY1JlE88L/k9F3DqeOYUUUSVK4PFjQ1v09R/R56zp0g3ASsaAOypLNs+Db+rDBCyKftLbGuoDQWG2EHBuIqw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\india\\Desktop\\AWS-Biling-Project\\BillingEngine1_Phase1\\BillingEngine1_Phase1\\BillingEngine1_Phase1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\india\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
