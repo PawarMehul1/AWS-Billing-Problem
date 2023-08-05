@@ -40,7 +40,7 @@ namespace BillingEngine.Models.Ec2
             for(int i=0; i<Usages.Count; i++)
             {
                 DateTime from = Usages[i].UsedFrom;
-                DateTime until = Usages[i].UsedFrom;
+                DateTime until = Usages[i].UsedUntil;
 
 
                 int startmonth=(from.Year*100)+from.Month;
@@ -90,7 +90,7 @@ namespace BillingEngine.Models.Ec2
                 else if(currentMonth>startmonth && currentMonth==endmonth) 
                 {
                     
-                    DateTime datefrom = new DateTime(monthYear.Year, monthYear.Year, 1, 0, 0, 0);
+                    DateTime datefrom = new DateTime(monthYear.Year, monthYear.Month, 1, 0, 0, 0);
 
                     ResourceUsageEvent resousageevnt = new ResourceUsageEvent(datefrom, until);
                     monthlyec2instanceusage.AddEc2UsageEvent(resousageevnt);

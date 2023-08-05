@@ -43,7 +43,6 @@ namespace BillingEngine.Models.Billing
 
                 foreach(var aggrigatedinstance in aggregatedMonthlyEc2Usages)
                 {
-                    
                     if (aggrigatedinstance.ResourceType.Equals(monthly.Ec2InstanceType.InstanceType))
                     {
                         aggrigatedinstance.addid(monthly.Ec2InstanceId);
@@ -53,7 +52,7 @@ namespace BillingEngine.Models.Billing
                             if (use.UsedFrom.Month == this.MonthYear.Month && use.UsedFrom.Year==this.MonthYear.Year)
                             {
                                 aggrigatedinstance.TotalUsedTime += use.getusedtime();
-                                aggrigatedinstance.TotalBilledTime += use.GetBillableHours() * 60 * 60;
+                                aggrigatedinstance.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
                                 aggrigatedinstance.TotalAmount += rate * (double)(use.GetBillableHours());
                             }
                         }
@@ -73,12 +72,12 @@ namespace BillingEngine.Models.Billing
                     foreach (var use in monthly.Usages)
                     { 
                             aggregatedusage.TotalUsedTime += use.getusedtime();
-                            aggregatedusage.TotalBilledTime += use.GetBillableHours() * 60 * 60;
+                            aggregatedusage.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
                             aggregatedusage.TotalAmount += rate * (double)(use.GetBillableHours());
                         
                     }
 
-                    aggregatedMonthlyEc2Usages.Add (aggregatedusage);
+                    aggregatedMonthlyEc2Usages.Add(aggregatedusage);
 
                 }
              

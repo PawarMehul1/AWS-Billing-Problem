@@ -36,15 +36,22 @@ namespace BillingEngine.Models
                     int starting = (use.UsedFrom.Year) * 100 + use.UsedFrom.Month;
                     int ending = (use.UsedUntil.Year) * 100 + use.UsedUntil.Month;
 
-                    months.Add(starting);
-                    months.Add(ending);
+                    for(int i=starting; i<=ending; i++)
+                    {
+                        if((i%100)==13)
+                        {
+                            i -= 12;
+                            i += 100;
+                        }
+                        months.Add(i);
+                    }
                 }
             }
 
             List<MonthYear> distintMonths = new List<MonthYear>();
             foreach(var mon in months)
             {
-                MonthYear month = new MonthYear(mon/100,mon%100);
+                MonthYear month = new MonthYear(mon%100,mon/100);
                 distintMonths.Add(month);
             }
             return distintMonths;

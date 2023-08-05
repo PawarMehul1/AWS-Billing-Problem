@@ -9,8 +9,8 @@ namespace BillingEngine.Models.Billing
         public int TotalResources { get; set; }
         
         public HashSet<string> ids { get; set; }
-        public int TotalBilledTime { get; set; }
-        public int TotalUsedTime { get; set; }
+        public TimeSpan TotalBilledTime { get; set; }
+        public TimeSpan TotalUsedTime { get; set; }
         public TimeSpan TotalDiscountedTime { get; set; }
         
         public double TotalAmount { get; set; }
