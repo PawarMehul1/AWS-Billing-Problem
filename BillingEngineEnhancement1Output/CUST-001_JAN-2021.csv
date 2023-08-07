@@ -1,0 +1,8 @@
+ABC Corporation
+Bill for Month of January 2021
+Total amount : $34.0752
+Discount : $0
+Actual amount : $34.0752
+Region,Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Total Amount,Discount,Actual cmount
+US (Ohio),t3.medium,2,1488:0:0,1488:0:0,$15.4752,$0,$15.4752
+Asia (Mumbai),t3.medium,2,1488:0:0,1488:0:0,$18.6,$0,$18.6

@@ -1,0 +1,7 @@
+XYZ Corporation
+Bill for Month of February 2022
+Total amount : $7.056
+Discount : $0
+Actual amount : $7.056
+Region,Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Total Amount,Discount,Actual cmount
+Asia (Delhi),t3.micro,1,672:0:0,672:0:0,$7.056,$0,$7.056

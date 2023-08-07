@@ -1,0 +1,7 @@
+XYZ Corporation
+Bill for Month of November 2021
+Total amount : $7.56
+Discount : $7.56
+Actual amount : $0
+Region,Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Total Amount,Discount,Actual cmount
+Asia (Delhi),t3.micro,1,720:0:0,720:0:0,$7.56,$7.56,$0

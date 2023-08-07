@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingEngineEnhancement1", "BillingEngineEnhancement1\BillingEngineEnhancement1.csproj", "{328DCED4-27E4-4AFD-9094-16857FE9FC81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{328DCED4-27E4-4AFD-9094-16857FE9FC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328DCED4-27E4-4AFD-9094-16857FE9FC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328DCED4-27E4-4AFD-9094-16857FE9FC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328DCED4-27E4-4AFD-9094-16857FE9FC81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F383DB0-D672-4A44-9BE2-4997C6E509F1}
+	EndGlobalSection
+EndGlobal

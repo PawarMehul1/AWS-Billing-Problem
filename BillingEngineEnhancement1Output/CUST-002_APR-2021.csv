@@ -1,0 +1,7 @@
+XYZ Corporation
+Bill for Month of April 2021
+Total amount : $64.8
+Discount : $0
+Actual amount : $64.8
+Region,Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Total Amount,Discount,Actual cmount
+Asia (Delhi),t3.micro,1,720:0:0,720:0:0,$64.8,$0,$64.8

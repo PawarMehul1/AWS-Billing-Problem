@@ -1,0 +1,7 @@
+ABC Corporation
+Bill for Month of December 2019
+Total amount : $331.824
+Discount : $0
+Actual amount : $331.824
+Region,Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Total Amount,Discount,Actual cmount
+Asia (Delhi),t3.medium,1,744:0:0,744:0:0,$331.824,$0,$331.824

@@ -45,7 +45,6 @@ namespace BillingEngine.Models.Billing
                 {
                     if (aggrigatedinstance.ResourceType.Equals(monthly.Ec2InstanceType.InstanceType))
                     {
-                        aggrigatedinstance.addid(monthly.Ec2InstanceId);
                         double rate = monthly.Ec2InstanceType.CostPerHour;
                         foreach (var use in monthly.Usages)
                         {
@@ -54,6 +53,13 @@ namespace BillingEngine.Models.Billing
                                 aggrigatedinstance.TotalUsedTime += use.getusedtime();
                                 aggrigatedinstance.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
                                 aggrigatedinstance.TotalAmount += rate * (double)(use.GetBillableHours());
+
+                                if(use.GetBillableHours()>0)
+                                {
+                                    aggrigatedinstance.addid(monthly.Ec2InstanceId);
+
+                                }
+                                
                             }
                         }
 
@@ -74,7 +80,11 @@ namespace BillingEngine.Models.Billing
                             aggregatedusage.TotalUsedTime += use.getusedtime();
                             aggregatedusage.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
                             aggregatedusage.TotalAmount += rate * (double)(use.GetBillableHours());
-                        
+
+                        if (use.GetBillableHours() > 0)
+                        {
+                            aggregatedusage.addid(monthly.Ec2InstanceId);
+                        }
                     }
 
                     aggregatedMonthlyEc2Usages.Add(aggregatedusage);

@@ -47,7 +47,7 @@ namespace BillingEngine.Models.Billing
                     bool condition2 = aggrigatedinstance.region.Name.Equals(monthly.Ec2InstanceType.Region.Name);
                     if (condition1 && condition2)
                     {
-                        aggrigatedinstance.addid(monthly.Ec2InstanceId);
+                        
                         double rate = monthly.Ec2InstanceType.CostPerHour;
                         foreach (var use in monthly.Usages)
                         {
@@ -56,6 +56,12 @@ namespace BillingEngine.Models.Billing
                                 aggrigatedinstance.TotalUsedTime += use.getusedtime();
                                 aggrigatedinstance.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
                                 aggrigatedinstance.TotalAmount += rate * (double)(use.GetBillableHours());
+
+                                if (use.GetBillableHours() > 0)
+                                {
+                                    aggrigatedinstance.addid(monthly.Ec2InstanceId);
+
+                                }
                             }
                         }
 
@@ -70,14 +76,18 @@ namespace BillingEngine.Models.Billing
                     double rate = monthly.Ec2InstanceType.CostPerHour;
                     aggregatedusage.region = monthly.Ec2InstanceType.Region;
                     aggregatedusage.ResourceType = monthly.Ec2InstanceType.InstanceType;
-                    aggregatedusage.addid(monthly.Ec2InstanceId);
-
+                    
                     foreach (var use in monthly.Usages)
                     { 
                             aggregatedusage.TotalUsedTime += use.getusedtime();
                             aggregatedusage.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
                             aggregatedusage.TotalAmount += rate * (double)(use.GetBillableHours());
-                        
+                     
+                        if (use.GetBillableHours() > 0)
+                            {
+                             aggregatedusage.addid(monthly.Ec2InstanceId);
+
+                            }
                     }
 
                     aggregatedMonthlyEc2Usages.Add(aggregatedusage);

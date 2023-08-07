@@ -1,0 +1,7 @@
+XYZ Corporation
+Bill for Month of December 2021
+Total amount : $74.772
+Discount : $7.812
+Actual amount : $66.96
+Region,Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Total Amount,Discount,Actual cmount
+Asia (Delhi),t3.micro,2,1488:0:0,1488:0:0,$74.772,$7.812,$66.96

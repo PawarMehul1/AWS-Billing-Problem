@@ -107,7 +107,7 @@ namespace BillingEngine.Printers
 
             data += aggregatedMonthlyEc2Usage.ResourceType + ",";
 
-            data += aggregatedMonthlyEc2Usage.TotalResources.ToString()+",";
+            data += aggregatedMonthlyEc2Usage.countinstance().ToString()+",";
 
             
             data += timespan(aggregatedMonthlyEc2Usage.TotalUsedTime) + ",";

@@ -1,0 +1,17 @@
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.csproj.AssemblyReference.cache
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.AssemblyInfoInputs.cache
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.AssemblyInfo.cs
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.csproj.CoreCompileInputs.cache
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\bin\Debug\net6.0\BillingEngineEnhancement1.exe
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\bin\Debug\net6.0\BillingEngineEnhancement1.deps.json
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\bin\Debug\net6.0\BillingEngineEnhancement1.runtimeconfig.json
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\bin\Debug\net6.0\BillingEngineEnhancement1.dll
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\bin\Debug\net6.0\BillingEngineEnhancement1.pdb
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\bin\Debug\net6.0\CsvHelper.dll
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.csproj.CopyComplete
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.dll
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\refint\BillingEngineEnhancement1.dll
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.pdb
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\BillingEngineEnhancement1.genruntimeconfig.cache
+C:\Users\india\Desktop\AWS-Biling-Project\BillingEngineEnhancement1\BillingEngineEnhancement1\obj\Debug\net6.0\ref\BillingEngineEnhancement1.dll
