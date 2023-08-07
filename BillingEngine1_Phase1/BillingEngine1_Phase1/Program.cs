@@ -12,13 +12,13 @@ namespace BillingEngine
             BillPrinter billPrinter = new BillPrinter();
 
             var monthlyBills = billingService.GenerateMonthlyBills(
-                "C:/Users/india/Desktop/AWS-Biling-Project/input/Customer.csv",
-                "C:/Users/india/Desktop/AWS-Biling-Project/input/AWSResourceTypes.csv",
-                "C:/Users/india/Desktop/AWS-Biling-Project/input/AWSOnDemandResourceUsage.csv",
-                "C:/Users/india/Desktop/AWS-Biling-Project/input/Region.csv"
+                "C:/Users/india/Desktop/AWS-Biling-Project/BillingEngine1_Phase1/input/Customer.csv",
+                "C:/Users/india/Desktop/AWS-Biling-Project/BillingEngine1_Phase1/input/AWSResourceTypes.csv",
+                "C:/Users/india/Desktop/AWS-Biling-Project/BillingEngine1_Phase1/input/AWSOnDemandResourceUsage.csv",
+                "C:/Users/india/Desktop/AWS-Biling-Project/BillingEngine1_Phase1/input/Region.csv"
             );
             
-            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "C:/Users/india/Desktop/AWS-Biling-Project/Phase1_output/"));
+            monthlyBills.ForEach(monthlyBill => billPrinter.PrintBill(monthlyBill, "C:/Users/india/Desktop/AWS-Biling-Project/BillingEngine1_Phase1/Result/"));
             
         }
     }
