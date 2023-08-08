@@ -17,17 +17,17 @@ namespace BillingEngineEnhancement1.DomainModelGenerators
             List<ParsedEc2InstanceType> parsedEc2InstanceTypes,
             List<ParsedEc2ResourceUsageReserved> parsedEc2ResourceUsageReserveds)
         {
-            foreach (var record in parsedEc2ResourceUsageReserveds)
+            foreach (var Ec2ResourceUsageReserved in parsedEc2ResourceUsageReserveds)
             {
                 bool find = false;
-                foreach (var cust in customers)
+                foreach (var customer in customers)
                 {
-                    if (cust.CustomerId.Equals(record.CustomerId))  
+                    if (customer.CustomerId.Equals(Ec2ResourceUsageReserved.CustomerId))  
                     {
-                        AddReservedCustomerInformation(customers,cust,
+                        AddReservedCustomerInformation(customers, customer,
                             parsedCustomerRecords,
                             parsedEc2InstanceTypes,
-                            record,true);
+                            Ec2ResourceUsageReserved, true);
 
                         find = true;
                         break;
@@ -41,7 +41,7 @@ namespace BillingEngineEnhancement1.DomainModelGenerators
                     AddReservedCustomerInformation(customers, customer,
                             parsedCustomerRecords,
                             parsedEc2InstanceTypes,
-                            record, false);
+                            Ec2ResourceUsageReserved, false);
                 }
             }
         }
@@ -49,33 +49,34 @@ namespace BillingEngineEnhancement1.DomainModelGenerators
         public void AddReservedCustomerInformation(List<Customer> customers,Customer customer,
             List<ParsedCustomerRecord> parsedCustomerRecords,
             List<ParsedEc2InstanceType> parsedEc2InstanceTypes,
-            ParsedEc2ResourceUsageReserved record,
-            bool present)
+            ParsedEc2ResourceUsageReserved Ec2ResourceUsageReserved,
+            bool customerispresent)
         {
             
                 List<ResourceUsageEvent> Usages = new List<ResourceUsageEvent>();
-                Usages.Add(new ResourceUsageEvent(record.UsedFrom, record.UsedUntil));
+                Usages.Add(new ResourceUsageEvent(Ec2ResourceUsageReserved.UsedFrom,
+                    Ec2ResourceUsageReserved.UsedUntil));
 
-                string instancetype = record.Ec2InstanceType;
+                string instancetype = Ec2ResourceUsageReserved.Ec2InstanceType;
                 double rate = 0.0;
 
-                foreach (var item in parsedEc2InstanceTypes)
+                foreach (var Ec2InstanceTypes in parsedEc2InstanceTypes)
                 {
-                    if (item.Ec2InstanceType.Equals(instancetype) && item.region.Equals(record.region))
+                    if (Ec2InstanceTypes.Ec2InstanceType.Equals(instancetype) && Ec2InstanceTypes.region.Equals(Ec2ResourceUsageReserved.region))
                     {
-                        rate = double.Parse(item.CostPerHourReserved);
+                        rate = double.Parse(Ec2InstanceTypes.CostPerHourReserved);
                     }
                 }
 
-                Ec2Region region = new Ec2Region(record.region);
-                Operatingsystem os = record.OS;
-                BillingType bt = BillingType.Reserved;
+                Ec2Region region = new Ec2Region(Ec2ResourceUsageReserved.region);
+                Operatingsystem os = Ec2ResourceUsageReserved.OS;
+                BillingType billingtype = BillingType.Reserved;
 
-                Ec2InstanceType ec2InstanceType = new Ec2InstanceType(instancetype, rate, region, os, bt);
+                Ec2InstanceType ec2InstanceType = new Ec2InstanceType(instancetype, rate, region, os, billingtype);
 
-                Ec2Instance ec2Instance = new Ec2Instance(record.Ec2InstanceId, ec2InstanceType, Usages);
+                Ec2Instance ec2Instance = new Ec2Instance(Ec2ResourceUsageReserved.Ec2InstanceId, ec2InstanceType, Usages);
 
-                if (present)
+                if (customerispresent)
                 {
                     customer.Ec2Instances.Add(ec2Instance);
                 }
@@ -84,16 +85,16 @@ namespace BillingEngineEnhancement1.DomainModelGenerators
                     List<Ec2Instance> list = new List<Ec2Instance>();
                     list.Add(ec2Instance);
 
-                    string name = "";
-                    foreach (var item in parsedCustomerRecords)
+                    string customername = "";
+                    foreach (var CustomerRecords in parsedCustomerRecords)
                     {
-                        if (item.CustomerId.Equals(record.CustomerId))
+                        if (CustomerRecords.CustomerId.Equals(Ec2ResourceUsageReserved.CustomerId))
                         {
-                            name = item.CustomerName;
+                            customername = CustomerRecords.CustomerName;
                         }
                     }
 
-                    Customer cs = new Customer(record.CustomerId, name, list);
+                    Customer cs = new Customer(Ec2ResourceUsageReserved.CustomerId, customername, list);
                     customers.Add(cs);
                 }   
         }

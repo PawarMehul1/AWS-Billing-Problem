@@ -32,13 +32,13 @@ namespace BillingEngine.DomainModelGenerators
                 .GenerateEc2InstanceTypes(parsedEc2InstanceTypes);
 
 
-            foreach(var instancetype in ec2InstanceTypes)
+            foreach(var ec2instancetype in ec2InstanceTypes)
             {
-                foreach(var regions in parsedEc2Regions)
+                foreach(var ec2region in parsedEc2Regions)
                 {
-                    if(regions.RegionName.Equals(instancetype.Region.Name) && regions.FreeTierEligibleInstanceType.Equals(instancetype.InstanceType))
+                    if(ec2region.RegionName.Equals(ec2instancetype.Region.Name) && ec2region.FreeTierEligibleInstanceType.Equals(ec2instancetype.InstanceType))
                     {
-                        instancetype.IsFreeTierEligible = true;
+                        ec2instancetype.IsFreeTierEligible = true;
                         break;
                     }
                 }

@@ -14,6 +14,10 @@ namespace BillingEngine.Models.Billing
         public string CustomerId { get; }
         public string CustomerName { get; }
 
+        public int windowsusage { get; set; }
+
+        public int linuxusage { get; set; }
+
         public MonthYear MonthYear { get; }
         
         public List<MonthlyEc2InstanceUsage> MonthlyEc2InstanceUsages { get; }
@@ -24,6 +28,8 @@ namespace BillingEngine.Models.Billing
             CustomerName = customerName;
             MonthYear = monthYear;
             MonthlyEc2InstanceUsages = new List<MonthlyEc2InstanceUsage>();
+            windowsusage = 0;
+            linuxusage = 0;
         }
 
         public void AddMonthlyEc2Usages(List<MonthlyEc2InstanceUsage> monthlyEc2InstanceUsages)
@@ -34,13 +40,15 @@ namespace BillingEngine.Models.Billing
         public List<AggregatedMonthlyEc2Usage> GetAggregatedMonthlyEc2Usages() 
         {
             //Using MonthlyEc2InstanceUsages, compute List<AggregatedMonthlyEc2Usage>
+            windowsusage = 0;
+            linuxusage = 0;
 
             List<AggregatedMonthlyEc2Usage> aggregatedMonthlyEc2Usages = new List<AggregatedMonthlyEc2Usage>();
             
             
             foreach(var monthly in MonthlyEc2InstanceUsages)
-            {  
-             
+            {
+
                     bool find = false;
                     bool isfree = monthly.Ec2InstanceType.IsFreeTierEligible && monthly.Ec2InstanceType.isfreemonth;
 
@@ -54,7 +62,6 @@ namespace BillingEngine.Models.Billing
                             double rate = monthly.Ec2InstanceType.CostPerHour;
                             foreach (var use in monthly.Usages)
                             {
-                              
                                     if (isfree)
                                     {
                                         adddiscount(aggrigatedinstance, use, monthly.Ec2InstanceType.OperatingSystem, rate);
@@ -117,41 +124,41 @@ namespace BillingEngine.Models.Billing
 
         public void adddiscount(AggregatedMonthlyEc2Usage aggregatedusage, ResourceUsageEvent use,Operatingsystem OS,double rate)
         {
-            if(OS==Operatingsystem.Windows && aggregatedusage.windowsuse<750)
+            if(OS==Operatingsystem.Windows && windowsusage < 750)
             {
                 int hours = use.GetBillableHours();
 
-                if((hours+ aggregatedusage.windowsuse)<=750)
+                if((hours+ windowsusage) <=750)
                 {
-                    aggregatedusage.windowsuse += hours;
+                    windowsusage += hours;
                     aggregatedusage.TotalDiscount += (double)(hours) * rate;
                     aggregatedusage.TotalDiscountedTime= TimeSpan.FromHours(hours);
                 }
                 else
                 {
-                    hours = 750-aggregatedusage.windowsuse;
+                    hours = 750-windowsusage;
 
-                    aggregatedusage.windowsuse = 750;
+                    windowsusage = 750;
                     aggregatedusage.TotalDiscount += (double)(hours) * rate;
                     aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
 
                 }
             }
-            if (OS == Operatingsystem.Linux && aggregatedusage.linuxuse < 750)
+            if (OS == Operatingsystem.Linux && linuxusage < 750)
             {
                 int hours = use.GetBillableHours();
 
-                if ((hours + aggregatedusage.linuxuse) <= 750)
+                if ((hours + linuxusage) <= 750)
                 {
-                    aggregatedusage.linuxuse += hours;
+                    linuxusage += hours;
                     aggregatedusage.TotalDiscount += (double)(hours) * rate;
                     aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
                 }
                 else
                 {
-                    hours = 750-aggregatedusage.linuxuse;
+                    hours = 750- linuxusage;
 
-                    aggregatedusage.linuxuse = 750;
+                    linuxusage = 750;
                     aggregatedusage.TotalDiscount += (double)(hours) * rate;
                     aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
 

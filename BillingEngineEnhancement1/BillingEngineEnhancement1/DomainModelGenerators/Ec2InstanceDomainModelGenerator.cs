@@ -13,55 +13,57 @@ namespace BillingEngine.DomainModelGenerators
 
             List<Ec2Instance> ec2instaces = new List<Ec2Instance>();
 
-            for (int i = 0; i < parsedEc2ResourceUsageTypeEventRecords.Count; i++)
+            foreach(var ResourceUsageTypeEventRecord in parsedEc2ResourceUsageTypeEventRecords)
             {
+                bool ec2instacepresent = false;
 
-                bool find = false;
-                for (int j = 0; j < ec2instaces.Count; j++)
+                foreach(var ec2instance in ec2instaces)
                 {
-                    bool condition1 = ec2instaces[j].InstanceId.Equals(parsedEc2ResourceUsageTypeEventRecords[i].Ec2InstanceId);
-                        bool condition2 = ec2instaces[j].InstanceType.OperatingSystem.Equals(parsedEc2ResourceUsageTypeEventRecords[i].OS);
+                    string userInstanceId = ResourceUsageTypeEventRecord.Ec2InstanceId;
+                   
+                    bool issameIntancetype = ec2instance.InstanceId.Equals(userInstanceId);
+                    bool issameregion = ec2instance.InstanceType.OperatingSystem.Equals(ResourceUsageTypeEventRecord.OS);
 
-                    if (condition1 && condition2)
+                    if (issameIntancetype && issameregion)
                     {
-                        DateTime starting = parsedEc2ResourceUsageTypeEventRecords[i].UsedFrom;
-                        DateTime ending = parsedEc2ResourceUsageTypeEventRecords[i].UsedUntil;
-                        ec2instaces[j].Usages.Add(new ResourceUsageEvent(starting,ending));
-                        find = true;
+                        DateTime starting = ResourceUsageTypeEventRecord.UsedFrom;
+                        DateTime ending = ResourceUsageTypeEventRecord.UsedUntil;
+
+                        ec2instance.Usages.Add(new ResourceUsageEvent(starting,ending));
+
+                        ec2instacepresent = true;
                         break;
                     }
                 }
-                if (!find)
+                if (!ec2instacepresent)
                 {
-                    Ec2InstanceType ec2insttype = new Ec2InstanceType();
+                    Ec2InstanceType ec2instncetype = new Ec2InstanceType();
 
-
-                    for (int j = 0; j < ec2InstanceTypes.Count; j++)
+                    foreach(var ec2InstanceType in ec2InstanceTypes)
                     {
-                        bool condition1 = ec2InstanceTypes[j].InstanceType.Equals(parsedEc2ResourceUsageTypeEventRecords[i].Ec2InstanceType);
-                        bool condition2 = ec2InstanceTypes[j].Region.Name.Equals(parsedEc2ResourceUsageTypeEventRecords[i].region);
-                        bool condition3 = ec2InstanceTypes[j].OperatingSystem.Equals(parsedEc2ResourceUsageTypeEventRecords[i].OS);
+                        bool issameIntancetype = ec2InstanceType.InstanceType.Equals(ResourceUsageTypeEventRecord.Ec2InstanceType);
+                        bool issameregion = ec2InstanceType.Region.Name.Equals(ResourceUsageTypeEventRecord.region);
+                        bool issameOS = ec2InstanceType.OperatingSystem.Equals(ResourceUsageTypeEventRecord.OS);
 
-
-                        if (condition1 && condition2 && condition3)
+                        if (issameIntancetype && issameregion && issameOS)
                         {
-                            ec2insttype = ec2InstanceTypes[j];
+                            ec2instncetype = ec2InstanceType;
                             break;
                         }
                     }
 
-
                     List<ResourceUsageEvent> usage = new List<ResourceUsageEvent>();
 
-                    DateTime starting = parsedEc2ResourceUsageTypeEventRecords[i].UsedFrom;
-                    DateTime ending = parsedEc2ResourceUsageTypeEventRecords[i].UsedUntil;
+                    DateTime startDate = ResourceUsageTypeEventRecord.UsedFrom;
+                    DateTime endDate = ResourceUsageTypeEventRecord.UsedUntil;
 
-                    usage.Add(new ResourceUsageEvent(starting, ending));
+                    usage.Add(new ResourceUsageEvent(startDate, endDate));
 
-                    string ec2instanceid = parsedEc2ResourceUsageTypeEventRecords[i].Ec2InstanceId;
-                    Ec2Instance ec2inst = new Ec2Instance(ec2instanceid, ec2insttype, usage);
+                    string ec2instanceid = ResourceUsageTypeEventRecord.Ec2InstanceId;
 
-                    ec2instaces.Add(ec2inst);
+                    Ec2Instance ec2instance = new Ec2Instance(ec2instanceid, ec2instncetype, usage);
+
+                    ec2instaces.Add(ec2instance);
                 }
 
             }

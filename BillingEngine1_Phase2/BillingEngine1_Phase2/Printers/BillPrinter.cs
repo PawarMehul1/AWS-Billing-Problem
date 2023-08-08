@@ -123,7 +123,7 @@ namespace BillingEngine.Printers
 
             data += "$"+discont.ToString()+",$";
 
-            data += (amount-discont).ToString();
+            data += Math.Round((amount - discont), 4).ToString();
 
 
             return data;

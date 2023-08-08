@@ -9,8 +9,6 @@ namespace BillingEngine.Models.Billing
         public string ResourceType { get; set; }
         public int TotalResources { get; set; }
 
-        public int windowsuse { get; set; }
-        public int linuxuse { get; set; }
         public Ec2Region region { get; set; }
         public HashSet<string> ids { get; set; }
         public TimeSpan TotalBilledTime { get; set; }

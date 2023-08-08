@@ -10,38 +10,55 @@ namespace BillingEngine.Billing
     {
         private const int MaxFreeTierEligibleHours = 750;
 
-        public void ApplyDiscounts(AggregatedMonthlyEc2Usage aggregatedusage,
+        public int windowsUsage { get; set; }
+        public int linuxUsage { get; set; }
+
+
+        public DiscountService()
+        {
+            windowsUsage = 0;
+            linuxUsage = 0;
+
+        }
+
+        public void ApplyDiscounts(AggregatedMonthlyEc2Usage aggregatedMonthlyEc2Usage,
             ResourceUsageEvent use,
             Operatingsystem OS, double rate)
         {
-            if (OS == Operatingsystem.Windows && aggregatedusage.windowsuse < 750)
+
+            if (OS == Operatingsystem.Windows && windowsUsage < 750)
             {
                 int hours = use.GetBillableHours();
 
-                if ((hours + aggregatedusage.windowsuse) > 750)
+                if ((hours + windowsUsage) > 750)
                 {
-                    hours = 750 - aggregatedusage.windowsuse;
-                }                   
-
-                aggregatedusage.windowsuse +=hours;
-                aggregatedusage.TotalDiscount += (double)(hours) * rate;
-                aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
-   
-            }
-            if (OS == Operatingsystem.Linux && aggregatedusage.linuxuse < 750)
-            {
-                int hours = use.GetBillableHours();
-
-                if ((hours + aggregatedusage.linuxuse) > 750)
-                {
-                    hours = 750 - aggregatedusage.linuxuse;
+                    hours = 750 - windowsUsage;
                 }
-        
-                aggregatedusage.linuxuse +=hours;
-                aggregatedusage.TotalDiscount += (double)(hours) * rate;
-                aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
+
+                windowsUsage += hours;
+
+                addbilledhoursandtime(aggregatedMonthlyEc2Usage, hours, rate);
+
+            }
+            if (OS == Operatingsystem.Linux && linuxUsage < 750)
+            {
+                int hours = use.GetBillableHours();
+
+                if ((hours + linuxUsage) > 750)
+                {
+                    hours = 750 - linuxUsage;
+                }
+                linuxUsage += hours;
+                
+                addbilledhoursandtime(aggregatedMonthlyEc2Usage, hours, rate);
   
             }
+        }
+
+        public void addbilledhoursandtime(AggregatedMonthlyEc2Usage aggregatedMonthlyEc2Usage,int hours,double rate)
+        {
+            aggregatedMonthlyEc2Usage.TotalDiscount += (double)(hours) * rate;
+            aggregatedMonthlyEc2Usage.TotalDiscountedTime = TimeSpan.FromHours(hours);
         }
 
         private void DistributeFreeTierEligibleHoursAcrossInstances(
