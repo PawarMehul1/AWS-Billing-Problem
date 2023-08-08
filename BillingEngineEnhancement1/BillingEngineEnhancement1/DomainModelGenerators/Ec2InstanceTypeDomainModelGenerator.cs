@@ -10,7 +10,6 @@ namespace BillingEngine.DomainModelGenerators
 
         public List<Ec2InstanceType> GenerateEc2InstanceTypes(List<ParsedEc2InstanceType> parsedEc2InstanceTypes) //done
         {
-            // Convert each object of type ParsedEc2InstanceType to Ec2InstanceType
             List<Ec2InstanceType> ec2InstanceTypes = new List<Ec2InstanceType>();
 
             for (int i = 0; i < parsedEc2InstanceTypes.Count; i++)
