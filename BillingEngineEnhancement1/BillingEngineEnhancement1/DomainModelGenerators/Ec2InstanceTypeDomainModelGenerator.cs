@@ -20,33 +20,22 @@ namespace BillingEngine.DomainModelGenerators
                 var instancetype = parsedEc2InstanceTypes[i].Ec2InstanceType;
 
 
-                Operatingsystem os = new Operatingsystem();
-                os = Operatingsystem.Windows;
-
-                BillingType billingType = new BillingType();
-                billingType = BillingType.OnDemand;
-
+                Operatingsystem os = Operatingsystem.Windows;
+                BillingType billingType = BillingType.OnDemand;
 
                 Ec2InstanceType ec2InstanceType = new Ec2InstanceType(instancetype, cost, region, os, billingType);
                 ec2InstanceTypes.Add(ec2InstanceType);
 
-                os = new Operatingsystem();
                 os = Operatingsystem.Linux;
-
                 ec2InstanceType = new Ec2InstanceType(instancetype, cost, region, os, billingType);
                 ec2InstanceTypes.Add(ec2InstanceType);
 
-
-                os = new Operatingsystem();
                 os = Operatingsystem.Windows;
-
-                billingType = new BillingType();
                 billingType = BillingType.Reserved;
 
                 ec2InstanceType = new Ec2InstanceType(instancetype, cost, region, os, billingType);
                 ec2InstanceTypes.Add(ec2InstanceType);
 
-                os = new Operatingsystem();
                 os = Operatingsystem.Linux;
                 ec2InstanceType = new Ec2InstanceType(instancetype, cost, region, os, billingType);
 

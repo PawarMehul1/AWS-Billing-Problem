@@ -55,87 +55,13 @@ namespace BillingEngine.DomainModelGenerators
                 )
                 .ToList();
 
-
-            foreach (var record in parsedEc2ResourceUsageReserveds)
-            {
-                bool find = false;
-                foreach (var cust in customers)
-                {
-                    if (cust.CustomerId.Equals(record.CustomerId))  //
-                    {
-
-                        List<ResourceUsageEvent> Usages = new List<ResourceUsageEvent>();
-                        Usages.Add(new ResourceUsageEvent(record.UsedFrom, record.UsedUntil));
-
-                        string instancetype = record.Ec2InstanceType;
-                        double rate = 0.0;
-
-                        foreach (var item in parsedEc2InstanceTypes)
-                        {
-                            if (item.Ec2InstanceType.Equals(instancetype) && item.region.Equals(record.region))
-                            {
-                                rate = double.Parse(item.CostPerHourReserved);
-                            }
-                        }
-
-                        Ec2Region region = new Ec2Region(record.region);
-                        Operatingsystem os = record.OS;
-                        BillingType bt = BillingType.Reserved;
-
-                        Ec2InstanceType ec2InstanceType = new Ec2InstanceType(instancetype, rate, region, os, bt);
+          
+            _reservedCustomerDomainModelGenerator.AddReservedCustomersinCustomers(customers,
+                parsedCustomerRecords, 
+                parsedEc2InstanceTypes, 
+                parsedEc2ResourceUsageReserveds);
 
 
-                        Ec2Instance ec2Instance = new Ec2Instance(record.Ec2InstanceId, ec2InstanceType, Usages);
-
-                        cust.Ec2Instances.Add(ec2Instance);
-
-                        find = true;
-                        break;
-
-                    }
-                }
-                if (!find)
-                {
-                    List<ResourceUsageEvent> Usages = new List<ResourceUsageEvent>();
-                    Usages.Add(new ResourceUsageEvent(record.UsedFrom, record.UsedUntil));
-
-                    string instancetype = record.Ec2InstanceType;
-                    double rate = 0.0;
-
-                    foreach (var item in parsedEc2InstanceTypes)
-                    {
-                        if (item.Ec2InstanceType.Equals(instancetype) && item.region.Equals(record.region))
-                        {
-                            rate = double.Parse(item.CostPerHourReserved);
-                        }
-                    }
-
-                    Ec2Region region = new Ec2Region(record.region);
-                    Operatingsystem os = record.OS;
-                    BillingType bt = BillingType.Reserved;
-
-                    Ec2InstanceType ec2InstanceType = new Ec2InstanceType(instancetype, rate, region, os, bt);
-
-
-                    Ec2Instance ec2Instance = new Ec2Instance(record.Ec2InstanceId, ec2InstanceType, Usages);
-
-                    List<Ec2Instance> list = new List<Ec2Instance>();
-                    list.Add(ec2Instance);
-
-                    string name = "";
-
-                    foreach (var item in parsedCustomerRecords)
-                    {
-                        if (item.CustomerId.Equals(record.CustomerId))
-                        {
-                            name = item.CustomerName;
-                        }
-                    }
-
-                    Customer cs = new Customer(record.CustomerId, name, list);
-                    customers.Add(cs);
-                }
-            }
 
             return customers;
         }
@@ -149,11 +75,9 @@ namespace BillingEngine.DomainModelGenerators
 
             List<Ec2Instance> ec2instaces = _ec2InstanceDomainModelGenerator.GenerateEc2InstanceModels(ec2ResourceUsageEventsForCustomer,ec2InstanceTypes);
 
+            Customer customer = new Customer(parsedCustomerRecord.CustomerId,parsedCustomerRecord.CustomerName, ec2instaces);
 
-            Customer cs = new Customer(parsedCustomerRecord.CustomerId,parsedCustomerRecord.CustomerName, ec2instaces);
-
-            // Build customer object as well as associated composite objects, e.g. Ec2Instance, 
-            return cs;
+            return customer;
         }
     }
 }

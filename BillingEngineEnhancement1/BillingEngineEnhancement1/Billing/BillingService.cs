@@ -51,18 +51,8 @@ namespace BillingEngine.Billing
 
             foreach (var item in parsedEc2ResourceUsageReserveds)
             {
-                int year = item.UsedUntil.Year;
-                int month = item.UsedUntil.Month;
-                month++;
-
-                if (month == 13)
-                {
-                    month = 1;
-                    year++;
-
-                }
-
-                item.UsedUntil = new DateTime(year, month, 1, 0, 0, 0);
+                item.UsedUntil = item.UsedUntil.AddDays(1);
+                
             }
 
             var customers = _customerDomainModelGenerator.GenerateCustomerModels(
