@@ -36,8 +36,8 @@ namespace BillingEngine.Models.Billing
             //Using MonthlyEc2InstanceUsages, compute List<AggregatedMonthlyEc2Usage>
 
             List<AggregatedMonthlyEc2Usage> aggregatedMonthlyEc2Usages = new List<AggregatedMonthlyEc2Usage>();
-            
-            
+
+            DiscountService discountService = new DiscountService();
             foreach(var monthly in MonthlyEc2InstanceUsages)
             {  
              
@@ -51,24 +51,22 @@ namespace BillingEngine.Models.Billing
                         if (condition1 && condition2)
                         {
                             double rate = monthly.Ec2InstanceType.CostPerHour;
-                            foreach (var use in monthly.Usages)
+                        foreach (var use in monthly.Usages)
+                        {
+
+                            if (isfree)
                             {
-                              
-                                
-                                    if (isfree)
-                                    {
-                                        adddiscount(aggrigatedinstance, use, monthly.Ec2InstanceType.OperatingSystem, rate);
-                                    }
-                                    aggrigatedinstance.TotalUsedTime += use.getusedtime();
-                                    aggrigatedinstance.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
-                                    aggrigatedinstance.TotalAmount += rate * (double)(use.GetBillableHours());
+                                discountService.ApplyDiscounts(aggrigatedinstance, use, monthly.Ec2InstanceType.OperatingSystem, rate);
+                            }
+                            aggrigatedinstance.TotalUsedTime += use.getusedtime();
+                            aggrigatedinstance.TotalBilledTime += TimeSpan.FromHours(use.GetBillableHours());
+                            aggrigatedinstance.TotalAmount += rate * (double)(use.GetBillableHours());
+
                             if (use.GetBillableHours() > 0)
                             {
                                 aggrigatedinstance.addid(monthly.Ec2InstanceId);
-
                             }
                         }
-
                             find = true;
                             break;
                         }
@@ -86,7 +84,7 @@ namespace BillingEngine.Models.Billing
                         {
                             if (isfree)
                             {
-                               adddiscount(aggregatedusage, use, monthly.Ec2InstanceType.OperatingSystem, rate);
+                            discountService.ApplyDiscounts(aggregatedusage, use, monthly.Ec2InstanceType.OperatingSystem, rate);
                             }
 
                             aggregatedusage.TotalUsedTime += use.getusedtime();
@@ -113,57 +111,12 @@ namespace BillingEngine.Models.Billing
             return aggregatedMonthlyEc2Usages;
         }
 
-        public void adddiscount(AggregatedMonthlyEc2Usage aggregatedusage, ResourceUsageEvent use,Operatingsystem OS,double rate)
-        {
-            if(OS==Operatingsystem.Windows && aggregatedusage.windowsuse<750)
-            {
-                int hours = use.GetBillableHours();
-
-                if((hours+ aggregatedusage.windowsuse)<=750)
-                {
-                    aggregatedusage.windowsuse += hours;
-                    aggregatedusage.TotalDiscount += (double)(hours) * rate;
-                    aggregatedusage.TotalDiscountedTime= TimeSpan.FromHours(hours);
-                }
-                else
-                {
-                    hours = 750-aggregatedusage.windowsuse;
-
-                    aggregatedusage.windowsuse = 750;
-                    aggregatedusage.TotalDiscount += (double)(hours) * rate;
-                    aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
-
-                }
-            }
-            if (OS == Operatingsystem.Linux && aggregatedusage.linuxuse < 750)
-            {
-                int hours = use.GetBillableHours();
-
-                if ((hours + aggregatedusage.linuxuse) <= 750)
-                {
-                    aggregatedusage.linuxuse += hours;
-                    aggregatedusage.TotalDiscount += (double)(hours) * rate;
-                    aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
-                }
-                else
-                {
-                    hours = 750-aggregatedusage.linuxuse;
-
-                    aggregatedusage.linuxuse = 750;
-                    aggregatedusage.TotalDiscount += (double)(hours) * rate;
-                    aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
-
-                }
-            }
-        }
 
         public void ApplyDiscount(string ec2InstanceId, int discountedHours)
         {
             //Find matching object of type MonthlyEc2InstanceUsage from MonthlyEc2InstanceUsages
             // and then call monthlyEc2InstanceUsage.ApplyDiscount(discountedHours)
         }
-
-
 
         
         public double GetTotalAmount()

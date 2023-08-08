@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BillingEngine.Models;
 using BillingEngine.Models.Billing;
+using BillingEngine.Models.Ec2;
 using static BillingEngine.Models.Ec2.Operatingsystem;
 
 namespace BillingEngine.Billing
@@ -9,24 +10,37 @@ namespace BillingEngine.Billing
     {
         private const int MaxFreeTierEligibleHours = 750;
 
-        public void ApplyDiscounts(
-            Customer customer,
-            MonthlyBill monthlyBill)
+        public void ApplyDiscounts(AggregatedMonthlyEc2Usage aggregatedusage,
+            ResourceUsageEvent use,
+            Operatingsystem OS, double rate)
         {
-            if (monthlyBill.MonthYear.IsLesserThan(customer.GetJoiningDate().AddYears(1)))
+            if (OS == Operatingsystem.Windows && aggregatedusage.windowsuse < 750)
             {
-                /*
-                var freeTierEligibleLinuxInstances = monthlyBill.GetFreeTierEligibleInstanceUsagesOfType(Linux);
-                var freeTierEligibleWindowsInstances = monthlyBill.GetFreeTierEligibleInstanceUsagesOfType(Windows);
+                int hours = use.GetBillableHours();
 
-                DistributeFreeTierEligibleHoursAcrossInstances(
-                    freeTierEligibleLinuxInstances,
-                    MaxFreeTierEligibleHours);
+                if ((hours + aggregatedusage.windowsuse) > 750)
+                {
+                    hours = 750 - aggregatedusage.windowsuse;
+                }                   
 
-                DistributeFreeTierEligibleHoursAcrossInstances(
-                    freeTierEligibleWindowsInstances,
-                    MaxFreeTierEligibleHours);
-                */
+                aggregatedusage.windowsuse +=hours;
+                aggregatedusage.TotalDiscount += (double)(hours) * rate;
+                aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
+   
+            }
+            if (OS == Operatingsystem.Linux && aggregatedusage.linuxuse < 750)
+            {
+                int hours = use.GetBillableHours();
+
+                if ((hours + aggregatedusage.linuxuse) > 750)
+                {
+                    hours = 750 - aggregatedusage.linuxuse;
+                }
+        
+                aggregatedusage.linuxuse +=hours;
+                aggregatedusage.TotalDiscount += (double)(hours) * rate;
+                aggregatedusage.TotalDiscountedTime = TimeSpan.FromHours(hours);
+  
             }
         }
 

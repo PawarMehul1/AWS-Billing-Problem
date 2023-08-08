@@ -29,7 +29,7 @@ namespace BillingEngine.Billing
 
             monthlyBill.AddMonthlyEc2Usages(customer.GetMonthlyEc2InstanceUsagesForMonth(monthYear));
 
-            _discountService.ApplyDiscounts(customer, monthlyBill);
+       
             return monthlyBill;
         }
     }

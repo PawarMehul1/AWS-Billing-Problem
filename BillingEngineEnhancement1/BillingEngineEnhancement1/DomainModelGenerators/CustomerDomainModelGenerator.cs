@@ -70,7 +70,7 @@ namespace BillingEngine.DomainModelGenerators
             ParsedCustomerRecord parsedCustomerRecord,
             List<ParsedEc2ResourceUsageEventRecord> ec2ResourceUsageEventsForCustomer,
             List<Ec2InstanceType> ec2InstanceTypes,
-            List<Ec2Region> ec2Regions) //done
+            List<Ec2Region> ec2Regions)
         {
 
             List<Ec2Instance> ec2instaces = _ec2InstanceDomainModelGenerator.GenerateEc2InstanceModels(ec2ResourceUsageEventsForCustomer,ec2InstanceTypes);
