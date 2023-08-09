@@ -18,7 +18,6 @@ namespace BillingEngine.Billing
         {
             windowsUsage = 0;
             linuxUsage = 0;
-
         }
 
         public void ApplyDiscounts(AggregatedMonthlyEc2Usage aggregatedMonthlyEc2Usage,

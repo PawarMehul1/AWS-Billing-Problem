@@ -30,21 +30,6 @@ namespace BillingEngine.DomainModelGenerators
                 ec2InstanceType = new Ec2InstanceType(instancetype, CostPerHourOndemand, region, os, billingType);
                 ec2InstanceTypes.Add(ec2InstanceType);
 
-
-                double CostPerHourReserved = double.Parse(parsedEc2InstanceType.CostPerHourReserved);
-
-
-                os = Operatingsystem.Windows;
-                billingType = BillingType.Reserved;
-
-                ec2InstanceType = new Ec2InstanceType(instancetype, CostPerHourReserved, region, os, billingType);
-                ec2InstanceTypes.Add(ec2InstanceType);
-
-                os = Operatingsystem.Linux;
-                ec2InstanceType = new Ec2InstanceType(instancetype, CostPerHourReserved, region, os, billingType);
-
-                ec2InstanceTypes.Add(ec2InstanceType);
-
             }
             return ec2InstanceTypes;
         }

@@ -29,7 +29,6 @@ namespace BillingEngine.Billing
 
             monthlyBill.AddMonthlyEc2Usages(customer.GetMonthlyEc2InstanceUsagesForMonth(monthYear));
 
-       
             return monthlyBill;
         }
     }

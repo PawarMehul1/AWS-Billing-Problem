@@ -79,7 +79,6 @@ namespace BillingEngine.Models.Ec2
                 }
                 else if(currentMonth>startmonth && currentMonth==endmonth) 
                 {
-                    
                     DateTime datefrom = new DateTime(monthYear.Year, monthYear.Month, 1, 0, 0, 0);
 
                     ResourceUsageEvent resousageevnt = new ResourceUsageEvent(datefrom, until);

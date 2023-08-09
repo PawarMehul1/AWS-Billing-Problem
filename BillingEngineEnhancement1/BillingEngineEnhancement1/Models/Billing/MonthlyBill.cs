@@ -39,37 +39,22 @@ namespace BillingEngine.Models.Billing
             List<AggregatedMonthlyEc2Usage> aggregatedMonthlyEc2Usages = new List<AggregatedMonthlyEc2Usage>();
 
             DiscountService discountService = new DiscountService();
-            foreach(var MonthlyEc2InstanceUsage in MonthlyEc2InstanceUsages)
+            foreach(var monthlyEc2InstanceUsage in MonthlyEc2InstanceUsages)
             {  
              
                     bool find = false;
-                    bool isdiscountable = MonthlyEc2InstanceUsage.Ec2InstanceType.IsFreeTierEligible && MonthlyEc2InstanceUsage.Ec2InstanceType.isfreemonth;
+                    bool isdiscountable = monthlyEc2InstanceUsage.Ec2InstanceType.IsFreeTierEligible && monthlyEc2InstanceUsage.Ec2InstanceType.isfreemonth;
 
                     foreach (var aggregatedMonthlyEc2Usage in aggregatedMonthlyEc2Usages)
                     {
-                        bool issameResourcetype = aggregatedMonthlyEc2Usage.ResourceType.Equals(MonthlyEc2InstanceUsage.Ec2InstanceType.InstanceType);
-                        bool issameRegion = aggregatedMonthlyEc2Usage.region.Name.Equals(MonthlyEc2InstanceUsage.Ec2InstanceType.Region.Name);
+                        bool issameResourcetype = aggregatedMonthlyEc2Usage.ResourceType.Equals(monthlyEc2InstanceUsage.Ec2InstanceType.InstanceType);
+                        bool issameRegion = aggregatedMonthlyEc2Usage.region.Name.Equals(monthlyEc2InstanceUsage.Ec2InstanceType.Region.Name);
                         
                         if (issameResourcetype && issameRegion)
                         {
+                            AddUsageandDiscount(monthlyEc2InstanceUsage,aggregatedMonthlyEc2Usage, 
+                                discountService, isdiscountable);
 
-                        double rate = MonthlyEc2InstanceUsage.Ec2InstanceType.CostPerHour;
-                        foreach (var Usage in MonthlyEc2InstanceUsage.Usages)
-                        {
-                            if (isdiscountable)
-                            {
-                                discountService.ApplyDiscounts(aggregatedMonthlyEc2Usage,Usage, MonthlyEc2InstanceUsage.Ec2InstanceType.OperatingSystem, rate);
-                            }
-
-                            aggregatedMonthlyEc2Usage.TotalUsedTime += Usage.getusedtime();
-                            aggregatedMonthlyEc2Usage.TotalBilledTime += TimeSpan.FromHours(Usage.GetBillableHours());
-                            aggregatedMonthlyEc2Usage.TotalAmount += rate * (double)(Usage.GetBillableHours());
-
-                            if (Usage.GetBillableHours() > 0)
-                            {
-                                aggregatedMonthlyEc2Usage.addid(MonthlyEc2InstanceUsage.Ec2InstanceId);
-                            }
-                        }
                             find = true;
                             break;
                         }
@@ -78,28 +63,14 @@ namespace BillingEngine.Models.Billing
                     if (!find)
                     {
                         AggregatedMonthlyEc2Usage aggregatedMonthlyEc2Usage = new AggregatedMonthlyEc2Usage();
-
-                        double rate = MonthlyEc2InstanceUsage.Ec2InstanceType.CostPerHour;
-                        aggregatedMonthlyEc2Usage.region = MonthlyEc2InstanceUsage.Ec2InstanceType.Region;
-                        aggregatedMonthlyEc2Usage.ResourceType = MonthlyEc2InstanceUsage.Ec2InstanceType.InstanceType;
-
-                        foreach (var Usage in MonthlyEc2InstanceUsage.Usages)
-                        {
-                            if (isdiscountable)
-                            {
-                                discountService.ApplyDiscounts(aggregatedMonthlyEc2Usage, Usage, MonthlyEc2InstanceUsage.Ec2InstanceType.OperatingSystem, rate);
-                            }
-
-                            aggregatedMonthlyEc2Usage.TotalUsedTime += Usage.getusedtime();
-                            aggregatedMonthlyEc2Usage.TotalBilledTime += TimeSpan.FromHours(Usage.GetBillableHours());
-                            aggregatedMonthlyEc2Usage.TotalAmount += rate * (double)(Usage.GetBillableHours());
-
-                            if(Usage.GetBillableHours()>0)
-                            {
-                            aggregatedMonthlyEc2Usage.addid(MonthlyEc2InstanceUsage.Ec2InstanceId);
                         
-                            }
-                        }
+                        aggregatedMonthlyEc2Usage.region = monthlyEc2InstanceUsage.Ec2InstanceType.Region;
+                        aggregatedMonthlyEc2Usage.ResourceType = monthlyEc2InstanceUsage.Ec2InstanceType.InstanceType;
+
+
+                        AddUsageandDiscount(monthlyEc2InstanceUsage, aggregatedMonthlyEc2Usage,
+                            discountService, isdiscountable);
+
                         aggregatedMonthlyEc2Usages.Add(aggregatedMonthlyEc2Usage);
 
                     } 
@@ -112,15 +83,30 @@ namespace BillingEngine.Models.Billing
             return aggregatedMonthlyEc2Usages;
         }
 
-        
-
-
-        public void ApplyDiscount(string ec2InstanceId, int discountedHours)
+        public void AddUsageandDiscount(MonthlyEc2InstanceUsage monthlyEc2InstanceUsage,
+                                        AggregatedMonthlyEc2Usage aggregatedMonthlyEc2Usage,
+                                        DiscountService discountService,
+                                        bool isdiscountable)
         {
-            //Find matching object of type MonthlyEc2InstanceUsage from MonthlyEc2InstanceUsages
-            // and then call monthlyEc2InstanceUsage.ApplyDiscount(discountedHours)
-        }
+            double rate = monthlyEc2InstanceUsage.Ec2InstanceType.CostPerHour;
+            foreach (var Usage in monthlyEc2InstanceUsage.Usages)
+            {
+                if (isdiscountable)
+                {
+                    discountService.ApplyDiscounts(aggregatedMonthlyEc2Usage, Usage, monthlyEc2InstanceUsage.Ec2InstanceType.OperatingSystem, rate);
+                }
 
+                aggregatedMonthlyEc2Usage.TotalUsedTime += Usage.getusedtime();
+                aggregatedMonthlyEc2Usage.TotalBilledTime += TimeSpan.FromHours(Usage.GetBillableHours());
+                aggregatedMonthlyEc2Usage.TotalAmount += rate * (double)(Usage.GetBillableHours());
+
+                if (Usage.GetBillableHours() > 0)
+                {
+                    aggregatedMonthlyEc2Usage.addid(monthlyEc2InstanceUsage.Ec2InstanceId);
+                }
+            }
+        }
+   
         
         public double GetTotalAmount()
         {
@@ -158,15 +144,5 @@ namespace BillingEngine.Models.Billing
             return GetTotalAmount() - GetTotalDiscount();
         }
 
-        /*
-        public List<MonthlyEc2InstanceUsage> GetFreeTierEligibleInstanceUsagesOfType(OperatingSystem operatingSystem)
-        {
-            return MonthlyEc2InstanceUsages
-                .Where(instanceUsage => instanceUsage.Ec2InstanceType.IsFreeTierEligible)
-                .Where(instanceUsage => instanceUsage.Ec2InstanceType.OperatingSystem == operatingSystem)
-                .ToList();
-        }
-
-        */
     }
 }
