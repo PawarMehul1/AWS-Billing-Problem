@@ -26,31 +26,31 @@ namespace BillingEngine.Printers
 
                 string newLine="";
 
-                newLine = string.Format("{0}", monthlyBill.CustomerName);
+                newLine = string.Format(monthlyBill.CustomerName);
                 output.AppendLine(string.Join(separator, newLine));
 
                 string monthname="Bill for Month of "+date.ToString("MMMM")+" "+monthlyBill.MonthYear.Year.ToString();
 
-                newLine = string.Format("{0}", monthname);
+                newLine = string.Format(monthname);
                 output.AppendLine(string.Join(separator, newLine));
 
                 string amount = Math.Round(monthlyBill.GetTotalAmount(), 4).ToString();
-                newLine = string.Format("{0}", "Total amount : $" + amount);
+                newLine = string.Format("Total amount : $" + amount);
                 output.AppendLine(string.Join(separator, newLine));
 
                 string discount = Math.Round(monthlyBill.GetTotalDiscount(), 4).ToString();
-                newLine = string.Format("{0}", "Discount : $" + discount);
+                newLine = string.Format("Discount : $" + discount);
                 output.AppendLine(string.Join(separator, newLine));
 
 
                 string actual_amount = Math.Round(monthlyBill.GetAmountToBePaid(), 4).ToString();
-                newLine = string.Format("{0}", "Actual amount : $" + actual_amount);
+                newLine = string.Format("Actual amount : $" + actual_amount); 
                 output.AppendLine(string.Join(separator, newLine));
 
 
                 string heading = "Region,Resource Type,Total Resources,Total Used Time (HH:mm:ss),Total Billed Time (HH:mm:ss),Total Amount,Discount,Actual cmount";
 
-                newLine = string.Format("{0}", heading);
+                newLine = string.Format(heading);
                 output.AppendLine(string.Join(separator, newLine));
                 
 
@@ -59,12 +59,10 @@ namespace BillingEngine.Printers
                 {
                    if( aggrigatemonthbill.TotalAmount!=0)
                     {
-                        //Console.WriteLine(PrintBillItem(aggrigatemonthbill));
-                        
-                        newLine = string.Format("{0}", PrintBillItem(aggrigatemonthbill));
+                       
+                        newLine = string.Format(PrintBillItem(aggrigatemonthbill));
                         output.AppendLine(string.Join(separator, newLine));
                         
-
                     }
                 }
 
