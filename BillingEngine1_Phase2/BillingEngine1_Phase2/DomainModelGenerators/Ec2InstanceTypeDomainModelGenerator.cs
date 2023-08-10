@@ -19,14 +19,12 @@ namespace BillingEngine.DomainModelGenerators
 
                 Ec2Region region = new Ec2Region(parsedEc2InstanceTypes[i].region);
                 
-                Operatingsystem os = new Operatingsystem();
-                os = Operatingsystem.Windows;
+                Operatingsystem os = Operatingsystem.Windows;
                 Ec2InstanceType ec2InstanceType = new Ec2InstanceType(parsedEc2InstanceTypes[i].Ec2InstanceType, cost, region,os);
 
 
                 ec2InstanceTypes.Add(ec2InstanceType);
 
-                os = new Operatingsystem();
                 os= Operatingsystem.Linux;
                 ec2InstanceType = new Ec2InstanceType(parsedEc2InstanceTypes[i].Ec2InstanceType, cost, region, os);
 

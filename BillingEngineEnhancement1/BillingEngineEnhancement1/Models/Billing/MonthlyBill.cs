@@ -36,6 +36,11 @@ namespace BillingEngine.Models.Billing
         public List<AggregatedMonthlyEc2Usage> GetAggregatedMonthlyEc2Usages() 
         {
            
+            if(CustomerId.Equals("CUST005"))
+            {
+                bool point = 1 < 2;
+            }
+             
             List<AggregatedMonthlyEc2Usage> aggregatedMonthlyEc2Usages = new List<AggregatedMonthlyEc2Usage>();
 
             DiscountService discountService = new DiscountService();

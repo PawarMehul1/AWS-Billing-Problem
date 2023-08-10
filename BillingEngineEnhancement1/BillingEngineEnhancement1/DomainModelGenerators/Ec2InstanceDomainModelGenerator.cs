@@ -22,9 +22,11 @@ namespace BillingEngine.DomainModelGenerators
                     string userInstanceId = ResourceUsageTypeEventRecord.Ec2InstanceId;
                    
                     bool issameIntancetype = ec2instance.InstanceId.Equals(userInstanceId);
-                    bool issameregion = ec2instance.InstanceType.OperatingSystem.Equals(ResourceUsageTypeEventRecord.OS);
+                    bool issameos = ec2instance.InstanceType.OperatingSystem.Equals(ResourceUsageTypeEventRecord.OS);
+                    bool issametype = ec2instance.InstanceType.InstanceType.Equals(ResourceUsageTypeEventRecord.Ec2InstanceType);
+                    bool issameregion = ec2instance.InstanceType.Region.Name.Equals(ResourceUsageTypeEventRecord.region);
 
-                    if (issameIntancetype && issameregion)
+                    if (issameIntancetype && issameregion && issametype && issameos)
                     {
                         DateTime starting = ResourceUsageTypeEventRecord.UsedFrom;
                         DateTime ending = ResourceUsageTypeEventRecord.UsedUntil;

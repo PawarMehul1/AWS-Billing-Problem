@@ -62,9 +62,7 @@ namespace BillingEngine.Printers
                         //Console.WriteLine(PrintBillItem(aggrigatemonthbill));
                         
                         newLine = string.Format("{0}", PrintBillItem(aggrigatemonthbill));
-                        output.AppendLine(string.Join(separator, newLine));
-                        
-
+                        output.AppendLine(string.Join(separator, newLine));   
                     }
                 }
 
@@ -72,18 +70,13 @@ namespace BillingEngine.Printers
                 try
                 {
                     File.AppendAllText(file, output.ToString());
-
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
-
-
                 }
                 return pathToOutputDir + name + ".csv";
                 
-
-
             }
 
             return "";
@@ -96,7 +89,6 @@ namespace BillingEngine.Printers
             int min = ts.Minutes;
             int hr = ts.Days*24+ts.Hours;
 
-            
             return hr.ToString()+":"+min.ToString()+":"+sec.ToString();
         }
 
